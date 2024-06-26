@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "maven3"
+    }
+
+    stages {
+        stage('Checkout Backend Code') {
+            steps {
+                dir('backend') {
+                    script {
+                        git branch: params.BRANCHE, url: 'https://github.com/maazounimen/contact-backend-service.git'
+                    }
+                }
+            }
+        }
+
+        stage('Checkout Code && Build Maven') {
+            steps {
+                switch(params.BRANCHE){
+                   case "main": sh "mvn -DskipTests clean package";break
+                   case "stage": sh "mvn -DskipTests clean package";break
+                }
+
+            }
+        }
+
+
+}
