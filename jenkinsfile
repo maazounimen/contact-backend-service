@@ -1,0 +1,87 @@
+pipeline {
+    agent any
+
+    environment {
+        BACKEND_BRANCH = params.BACKEND_BRANCH
+        FRONTEND_BRANCH = params.FRONTEND_BRANCH
+    }
+
+    tools {
+        maven "maven3"
+        nodejs "nodejs"
+    }
+
+    stages {
+        stage('Checkout Backend Code') {
+            steps {
+                dir('backend') {
+                    script {
+                        git branch: "${BACKEND_BRANCH}", url: 'https://github.com/maazounimen/contact-backend-service.git'
+                    }
+                }
+            }
+        }
+
+        stage('Checkout Frontend Code') {
+            steps {
+                dir('frontend') {
+                    script {
+                        git branch: "${FRONTEND_BRANCH}", url: 'https://github.com/maazounimen/contact_ui_ng_app.git'
+                    }
+                }
+            }
+        }
+
+        stage('Build Backend') {
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'stage'
+                }
+            }
+            steps {
+                dir('backend') {
+                    script {
+                        sh "mvn -DskipTests clean install"
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image - Backend') {
+            steps {
+                script {
+                    docker.build("contact_backend_app:${BACKEND_BRANCH}")
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    script {
+                        sh 'npm install'
+                        sh 'ng build'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image - Frontend') {
+            steps {
+                script {
+                    docker.build("contact_frontend_app:${FRONTEND_BRANCH}")
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh 'kubectl apply -f ./Deployment.yml'
+                    sh 'kubectl apply -f ./contact_ui_deployment.yml'
+                }
+            }
+        }
+    }
+}
