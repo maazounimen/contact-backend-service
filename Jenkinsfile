@@ -8,7 +8,6 @@ pipeline {
 
     tools {
         maven "maven3"
-        nodejs "nodejs"
     }
 
     stages {
@@ -17,16 +16,6 @@ pipeline {
                 dir('backend') {
                     script {
                         git branch: "${BACKEND_BRANCH}", url: 'https://github.com/maazounimen/contact-backend-service.git'
-                    }
-                }
-            }
-        }
-
-        stage('Checkout Frontend Code') {
-            steps {
-                dir('frontend') {
-                    script {
-                        git branch: "${FRONTEND_BRANCH}", url: 'https://github.com/maazounimen/contact_ui_ng_app.git'
                     }
                 }
             }
@@ -57,24 +46,6 @@ pipeline {
             }
         }
 
-        stage('Build Frontend') {
-            steps {
-                dir('frontend') {
-                    script {
-                        sh 'npm install'
-                        sh 'ng build'
-                    }
-                }
-            }
-        }
-
-        stage('Build Docker Image - Frontend') {
-            steps {
-                script {
-                    docker.build("contact_frontend_app:${FRONTEND_BRANCH}")
-                }
-            }
-        }
 
 /*         stage('Deploy to Kubernetes') {
             steps {
