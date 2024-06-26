@@ -20,8 +20,8 @@ pipeline {
             steps {
                 script{
                     switch(params.BRANCHE){
-                        case "main": sh "mvn -DskipTests clean package";break
-                        case "stage": sh "mvn -DskipTests clean package";break
+                        case "main": sh "mvn -DskipTests clean install";break
+                        case "stage": sh "mvn -DskipTests clean install";break
                     }
                 }
 
