@@ -21,7 +21,7 @@ public class ContatctBackendAppApplication {
 	{
 		return args ->
 		{
-			//Insérer trois clients de test dans la BD
+			//Insérer un clients de test dans la BD
 			contactRepository.save(new Contact((Integer) null,"Imen","imen@gmail.com", 123456L));
 
 			//Afficher les clients existants dans la BD
