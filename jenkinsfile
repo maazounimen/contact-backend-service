@@ -4,7 +4,7 @@ pipeline {
     environment {
         BACKEND_BRANCH = params.BACKEND_BRANCH
         FRONTEND_BRANCH = params.FRONTEND_BRANCH
-    }
+        }
 
     tools {
         maven "maven3"
@@ -51,7 +51,8 @@ pipeline {
         stage('Build Docker Image - Backend') {
             steps {
                 script {
-                    docker.build("contact_backend_app:${BACKEND_BRANCH}")
+                    docker.build("imenmz/contact_backend:$BUILD_ID")
+                    docker.push("imenmz/contact_backend:$BUILD_ID")
                 }
             }
         }
@@ -75,13 +76,14 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
+/*         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                // tester en local
                     sh 'kubectl apply -f ./Deployment.yml'
                     sh 'kubectl apply -f ./contact_ui_deployment.yml'
                 }
             }
-        }
+        } */
     }
 }
