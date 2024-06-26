@@ -18,9 +18,11 @@ pipeline {
 
         stage('Checkout Code && Build Maven') {
             steps {
-                switch(params.BRANCHE){
-                   case "main": sh "mvn -DskipTests clean package";break
-                   case "stage": sh "mvn -DskipTests clean package";break
+                script{
+                    switch(params.BRANCHE){
+                        case "main": sh "mvn -DskipTests clean package";break
+                        case "stage": sh "mvn -DskipTests clean package";break
+                    }
                 }
 
             }
