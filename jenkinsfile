@@ -12,7 +12,7 @@ pipeline {
             }
         }
 
-        stage('Checkout Code && Build Maven') {
+  /*       stage('Checkout Code && Build Maven') {
             steps {
                 script{
                     switch(params.BRANCHE){
@@ -22,7 +22,7 @@ pipeline {
                 }
 
             }
-        }
+        } */
     }
 
 }
