@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('version controle') {
+           steps {
+             sh 'java --version && mvn --version'
+             sh 'echo $JAVA_HOME'
+          }
+        }
         stage('Checkout Backend Code') {
             steps {
                 dir('backend') {
