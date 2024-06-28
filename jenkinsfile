@@ -39,9 +39,10 @@ pipeline {
                     def scannerHome = tool 'sonar_scanner'
                         withSonarQubeEnv('sonar_server') {
                             sh "${scannerHome}/bin/sonar-scanner \
-                               -Dsonar.projectKey=contact-backend-service \
-                               -Dsonar.java.binaries=target/test-classes/org/m2i/contatct_backend_app/ContatctBackendAppApplicationTests "
-                            }
+                                -Dsonar.projectKey=contact-backend-service \
+                                -Dsonar.tests=src/test/java \
+                                -Dsonar.test.inclusions=**/*Test*.java
+                            "}
                  }
             }
 
@@ -50,3 +51,4 @@ pipeline {
     }
 
 }
+                         //       -Dsonar.java.binaries=target/test-classes/org/m2i/contatct_backend_app/ContatctBackendAppApplicationTests "
