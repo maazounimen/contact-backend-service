@@ -59,6 +59,13 @@ pipeline {
             }
         }
 
+        stage('Build and Deploy') {
+                    steps {
+                        sh 'mvn clean package -Dversion=${BUILD_ID}-${BUILD_TIMESTAMP}-$(date +%s)'
+                        sh 'mvn deploy -Dversion=${BUILD_ID}-${BUILD_TIMESTAMP}-$(date +%s) --update-snapshots'
+                    }
+        }
+
         stage("Nexus") {
             steps {
                 nexusArtifactUploader artifacts:
