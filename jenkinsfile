@@ -82,7 +82,7 @@ pipeline {
         stage('Build Docker Image') {
                         steps {
                            // Utilisation de --cgroup-manager=cgroupfs pour éviter les problèmes avec systemd
-                            sh 'podman build --cgroup-manager=cgroupfs -t imenmz/contact_backend:v2 .'
+                            sh 'docker build --cgroup-manager=cgroupfs -t imenmz/contact_backend:v2 .'
 
                         }
         }
