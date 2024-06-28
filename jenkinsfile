@@ -82,7 +82,7 @@ pipeline {
         stage('Build Docker Image') {
                         steps {
                             script {
-                                sh 'docker build --tty -t ${DOCKER_REGISTRY} . '
+                                sh 'docker build -t ${DOCKER_REGISTRY} .'
                             }
                         }
         }
