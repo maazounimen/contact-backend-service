@@ -67,11 +67,11 @@ pipeline {
                         		protocol: 'http',
                         		repository: 'contact-backend-service',
                         		version: '${env.BUILD_ID}-${env.BUILD_TIMESTAMP}'
-                        	}
             }
         }
+    }
 
 
     }
 
-}
+
