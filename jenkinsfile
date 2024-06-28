@@ -58,7 +58,7 @@ pipeline {
             }
         }
 
-        stage("Nexus") {
+/*         stage("Nexus") {
             steps {
                 nexusArtifactUploader artifacts:
                         		[[
@@ -75,9 +75,9 @@ pipeline {
                         		repository: 'contact-backend-service',
                         		version: '${env.BUILD_ID}-${env.BUILD_TIMESTAMP}'
             }
-        }
+        } */
 
-/*         stage('Push to Registry') {
+         stage('Push to Registry') {
                 steps {
                         script {
                             docker.withRegistry('', "${DOCKER_REGISTRY_CREDENTIALS}") {
@@ -97,14 +97,14 @@ pipeline {
                             '''
                     }
                 }
-        } */
+        }
 
 
 
 
     }
 
-/*         post {
+       post {
             always {
                 // Cleanup Docker environment
                 script {
@@ -117,7 +117,7 @@ pipeline {
             failure {
                 echo 'Deployment failed'
             }
-        } */
+        }
 
     }
 
