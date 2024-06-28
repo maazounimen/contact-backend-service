@@ -3,11 +3,13 @@ pipeline {
     tools {
       jdk "jdk21"
     }
+/*
     environment {
             DOCKER_IMAGE = 'contact_backend:v2'
             DOCKER_REGISTRY = 'imenmz/contact_backend:v2'
             DOCKER_REGISTRY_CREDENTIALS = 'docker_credentials' // Jenkins credentials ID
     }
+ */
 
     stages {
         stage('version controle') {
