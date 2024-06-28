@@ -3,6 +3,11 @@ pipeline {
     tools {
       jdk "jdk21"
     }
+    environment {
+            DOCKER_IMAGE = 'contact_backend:v1'
+            DOCKER_REGISTRY = 'imenmz/contact_backend:v1'
+            DOCKER_REGISTRY_CREDENTIALS = 'docker_credentials' // Jenkins credentials ID
+    }
 
     stages {
         stage('version controle') {
@@ -69,6 +74,45 @@ pipeline {
                         		version: '${env.BUILD_ID}-${env.BUILD_TIMESTAMP}'
             }
         }
+
+        stage('Push to Registry') {
+                steps {
+                        script {
+                            docker.withRegistry('', "${DOCKER_REGISTRY_CREDENTIALS}") {
+                                docker.image("${DOCKER_IMAGE}").push()
+                            }
+                        }
+                }
+        }
+
+        stage('Deploy') {
+                steps {
+                    script {
+                            // Pull the image from Docker registry and deploy it
+                            sh '''
+                            docker pull ${DOCKER_REGISTRY}
+                            docker run -d --name myapp -p 8083:8083 ${DOCKER_REGISTRY}
+                            '''
+                    }
+                }
+        }
+
+
+    post {
+        always {
+            // Cleanup Docker environment
+            script {
+                sh 'docker system prune -f'
+            }
+        }
+        success {
+            echo 'Deployment completed successfully'
+        }
+        failure {
+            echo 'Deployment failed'
+        }
+    }
+
     }
 
 

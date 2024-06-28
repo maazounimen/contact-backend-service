@@ -10,4 +10,4 @@ WORKDIR /usr/app/
 # Définir le point d'entrée pour exécuter l'application Java
 ENTRYPOINT ["java", "-jar", "contact-backend-service-0.0.1-SNAPSHOT.jar"]
 # Exposer le port 8080 (docker)
-EXPOSE 8081
+EXPOSE 8083
