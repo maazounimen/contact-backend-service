@@ -98,23 +98,24 @@ pipeline {
         }
 
 
-    post {
-        always {
-            // Cleanup Docker environment
-            script {
-                sh 'docker system prune -f'
+
+
+    }
+
+        post {
+            always {
+                // Cleanup Docker environment
+                script {
+                    sh 'docker system prune -f'
+                }
+            }
+            success {
+                echo 'Deployment completed successfully'
+            }
+            failure {
+                echo 'Deployment failed'
             }
         }
-        success {
-            echo 'Deployment completed successfully'
-        }
-        failure {
-            echo 'Deployment failed'
-        }
-    }
-
-    }
-
 
     }
 
