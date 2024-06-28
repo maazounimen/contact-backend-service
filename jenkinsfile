@@ -40,7 +40,7 @@ pipeline {
                         withSonarQubeEnv('sonar_server') {
                             sh "${scannerHome}/bin/sonar-scanner \
                                -Dsonar.projectKey=contact-backend-service \
-                               -Dsonar.java.binaries=target/test-classes/org/m2i/contact_backend_app/ContatctBackendAppApplicationTests"
+                               -Dsonar.java.binaries=target/test-classes/org/m2i/contatct_backend_app/ContatctBackendAppApplicationTests "
                             }
                  }
             }
