@@ -4,8 +4,8 @@ pipeline {
       jdk "jdk21"
     }
     environment {
-            DOCKER_IMAGE = 'contact_backend:v1'
-            DOCKER_REGISTRY = 'imenmz/contact_backend:v1'
+            DOCKER_IMAGE = 'contact_backend:v2'
+            DOCKER_REGISTRY = 'imenmz/contact_backend:v2'
             DOCKER_REGISTRY_CREDENTIALS = 'docker_credentials' // Jenkins credentials ID
     }
 
@@ -75,7 +75,7 @@ pipeline {
             }
         }
 
-        stage('Push to Registry') {
+/*         stage('Push to Registry') {
                 steps {
                         script {
                             docker.withRegistry('', "${DOCKER_REGISTRY_CREDENTIALS}") {
@@ -95,7 +95,7 @@ pipeline {
                             '''
                     }
                 }
-        }
+        } */
 
 
 
