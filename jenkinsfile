@@ -102,7 +102,7 @@ pipeline {
 
     }
 
-        post {
+/*         post {
             always {
                 // Cleanup Docker environment
                 script {
@@ -115,7 +115,7 @@ pipeline {
             failure {
                 echo 'Deployment failed'
             }
-        }
+        } */
 
     }
 
