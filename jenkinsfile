@@ -81,9 +81,9 @@ pipeline {
 
         stage('Build Docker Image') {
                         steps {
-                            script {
-                                sh 'docker build -t ${DOCKER_REGISTRY} .'
-                            }
+                           // Utilisation de --cgroup-manager=cgroupfs pour éviter les problèmes avec systemd
+                            sh 'podman build --cgroup-manager=cgroupfs -t imenmz/contact_backend:v2 .'
+
                         }
         }
 
