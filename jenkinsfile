@@ -51,9 +51,9 @@ pipeline {
             }
         }
 
-                stage("Nexus") {
-                        	steps {
-                        		nexusArtifactUploader artifacts:
+        stage("Nexus") {
+            steps {
+                nexusArtifactUploader artifacts:
                         		[[
                         			artifactId: 'contact-backend-service',
                         			classifier: '',
@@ -68,11 +68,10 @@ pipeline {
                         		repository: 'contact-backend-service',
                         		version: '${env.BUILD_ID}-${env.BUILD_TIMESTAMP}'
                         	}
-                        }
             }
+        }
 
 
     }
 
 }
-                         //       -Dsonar.java.binaries=target/test-classes/org/m2i/contatct_backend_app/ContatctBackendAppApplicationTests "
