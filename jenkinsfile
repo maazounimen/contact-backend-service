@@ -5,8 +5,8 @@ pipeline {
     }
 
     environment {
-            DOCKER_IMAGE = 'contact_backend:v1'
-            DOCKER_REGISTRY = 'imenmz/contact_backend:v1'
+            DOCKER_IMAGE = 'contact_backend:v2'
+            DOCKER_REGISTRY = 'imenmz/contact_backend:v2'
             DOCKER_REGISTRY_CREDENTIALS = 'docker_credentials' // Jenkins credentials ID
     }
 
@@ -77,14 +77,24 @@ pipeline {
             }
         } */
 
-         stage('Push to Registry') {
-                steps {
-                        script {
-                            docker.withRegistry('', "${DOCKER_REGISTRY_CREDENTIALS}") {
-                                docker.image("${DOCKER_IMAGE}").push()
+
+        stage('Build Docker Image') {
+                        steps {
+                            script {
+                                sh 'docker build -t ${DOCKER_REGISTRY} .'
                             }
                         }
-                }
+        }
+
+        stage('Tag and Push Docker Image') {
+                    steps {
+                        script {
+                          docker.withRegistry('', "${DOCKER_REGISTRY_CREDENTIALS}") {
+                            sh 'docker tag ${DOCKER_IMAGE} ${DOCKER_REGISTRY}'
+                            sh 'docker push ${DOCKER_REGISTRY}'
+                        }
+                       }
+                    }
         }
 
         stage('Deploy') {
@@ -104,7 +114,7 @@ pipeline {
 
     }
 
-/*        post {
+        post {
             always {
                 // Cleanup Docker environment
                 script {
@@ -117,7 +127,7 @@ pipeline {
             failure {
                 echo 'Deployment failed'
             }
-        } */
+        }
 
     }
 
