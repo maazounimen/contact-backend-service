@@ -5,8 +5,8 @@ pipeline {
     }
 
     environment {
-            DOCKER_IMAGE = 'contact_backend:v2'
-            DOCKER_REGISTRY = 'imenmz/contact_backend:v2'
+            DOCKER_IMAGE = 'contact_backend:v1'
+            DOCKER_REGISTRY = 'imenmz/contact_backend:v1'
             DOCKER_REGISTRY_CREDENTIALS = 'docker_credentials' // Jenkins credentials ID
     }
 
@@ -93,7 +93,7 @@ pipeline {
                             // Pull the image from Docker registry and deploy it
                             sh '''
                             docker pull ${DOCKER_REGISTRY}
-                            docker run -d --name myapp -p 8083:8083 ${DOCKER_REGISTRY}
+                            docker run -p 8083:8083 ${DOCKER_REGISTRY}
                             '''
                     }
                 }
