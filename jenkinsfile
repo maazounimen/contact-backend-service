@@ -34,19 +34,23 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                        // Execute SonarQube analysis
-                 script {
-                    def scannerHome = tool 'sonar_scanner'
-                        withSonarQubeEnv('sonar_server') {
-                            sh "${scannerHome}/bin/sonar-scanner \
-                                -Dsonar.projectKey=contact-backend-service \
-                                -Dsonar.tests=src/test/java \
-                                -Dsonar.test.inclusions=**/*Test*.java
-                            "}
-                 }
+                script {
+                    def scannerHome = tool name: 'sonar_scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv('sonar_server') {
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=contact-backend-service \
+                            -Dsonar.sources=src/main/java \
+                            -Dsonar.java.binaries=target/classes \
+                            -Dsonar.tests=src/test/java \
+                            -Dsonar.test.inclusions="**/*Test*.java" \
+                            -Dsonar.junit.reportPaths=target/surefire-reports
+                        """
+                    }
+                }
             }
-
         }
+
 
     }
 
